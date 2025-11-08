@@ -17,9 +17,9 @@ app.use(express.json());
 app.use(methooverride("_method"));
 app.use(express.static(path.join(__dirname,"dist")));
 
-app.get("/",(req,res)=>{
-    res.sendFile(path.join(__dirname,"dist/index.html"))
-})
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
 
 main()
 .then(()=>{console.log("User successfully connected with database")})
@@ -31,7 +31,10 @@ async function main() {
     await mongoose.connect(process.env.MONGOURL);
 } 
 app.use(cors({
-    origin:"http://localhost:5173"
+    origin:[
+    "http://localhost:5173",
+    "http://localhost:3000"
+    ]
 }));
 
 
